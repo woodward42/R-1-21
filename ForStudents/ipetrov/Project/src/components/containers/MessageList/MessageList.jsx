@@ -26,22 +26,43 @@ export default class MessageList extends Component {
         this.setState({
             messages: [...this.state.messages, 
                 {name: 'You', text: yourMessage},
-                {name: 'Bot-Sociopath', text: regexp.test(yourMessage)?'Parle français?':'Ай донт спик инглиш'}
+                // имитация раздумий
+                {name: 'Bot-Sociopath', text: '#$#$#$#$#$#'}
             ]
         });
+
+        
+        this.answer = regexp.test(yourMessage)?'Parle français?':'Ай донт спик инглиш';
     }
 
+    componentDidUpdate () {
+        // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
+        const last = this.state.messages[this.state.messages.length-1];
+        if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
+            this.state.messages.pop()
+            setTimeout(() =>  
+            this.setState({
+                messages: [...this.state.messages, 
+                    {name: 'Bot-Sociopath', text: this.answer}
+                ] 
+            })
+            , 1000);
+            
+        }
+
+    }
 
     render() {
         const messageInput = <input type="text" id="messageSender"></input>;
         const { messages } = this.state;
+        
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text }
             />);
-        
+
         return <div>
             {messageInput}
             <button onClick={ this.sendMessage }>add</button>
