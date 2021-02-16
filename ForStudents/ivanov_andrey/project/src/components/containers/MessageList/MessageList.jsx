@@ -13,6 +13,7 @@ export default class MessageList extends Component {
             ],
             text: ''
         };
+        
     }
 
     sendMessage = () => {
