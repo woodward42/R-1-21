@@ -28,9 +28,9 @@ export default class MsgInput extends Component {
     //короче, когда добавил кнопку через Material, там клик ловится то на спан, то на баттон, то еще на какой-то элемент кнопки
     //я так и не понял, как в целом передать сюда, что я кликнул по компоненту КНОПКА. как это сделать, подскажите?
     if (evt.keyCode == 13 || evt.target.tagName == 'BUTTON' || evt.target.innerText == 'ОТПРАВИТЬ'){
-      
-      this.props.parentCallback(input.value); 
-      input.value = '';
+    
+     this.props.parentCallback(input.value); 
+     input.value = '';
     }
   }
   
