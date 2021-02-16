@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './style.scss';
 import Message from '@components/Message';
+import MsgInput from '@components/MsgInput';
 
 export default class MessageList extends Component {
     constructor (props) {
@@ -10,39 +11,29 @@ export default class MessageList extends Component {
                 { name: 'Андрей', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
                 { name: 'Андрей', text: 'Как дела?' }
             ],
+            text: ''
         };
     }
 
     sendMessage = () => {
         this.setState({
             messages: [...this.state.messages, {
-                name: 'Аноним', text: 'Норм'
+                name: 'Аноним', text: this.state.text
             }]
         });
-    }
-    componentWillMount() {
-        console.log('MessageList componentWillMount');
-    }
- 
-    componentDidMount() {
-        console.log('MessageList componentDidMount');
-        
-    }
-     componentDidUpdate() {
-        console.log('MessageList componentDidUpdate');
-        let msgArr = [...this.state.messages];
-        let msgArrLength = msgArr.length;
+    }    
 
-        if (msgArr[msgArrLength-1].name != 'Бот'){
+    handleCallback = (childData) => {
+        this.setState({text: childData});
+    }
 
-            setTimeout(() => {
-                this.setState({
-                    messages: [...this.state.messages, {
-                        name: 'Бот', text: 'Ответ от бота через 1 секунду'
-                    }]
-                }); 
-            }, 1000);
-        }
+    componentDidUpdate() {
+        //если текст не пустой, то мы только что обновили стэйт и из MsgInput приняли туда текст + обновили стэйт
+        //запускаем отправку сообщения
+        if (this.state.text !== ''){
+            this.sendMessage();
+            this.setState({text: ''});
+        }   
     }
 
     render() {
@@ -56,7 +47,7 @@ export default class MessageList extends Component {
         
         return <div className="message-list">
                  { Messages }
-                 <button className="message-list__btn" onClick={ this.sendMessage }>Отправить сообщение</button>
+                 <MsgInput parentCallback = { this.handleCallback }/>
                </div>;
 
     }
