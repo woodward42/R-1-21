@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import './style.scss';
 import { TextField, withStyles } from '@material-ui/core';
 
-const styles = theme => ({
+const styles ={
   root: {
     display: 'flex',
     flexDirection: 'column',
-    margin: theme.spacing(8),
-    padding: theme.spacing(4),
+    margin: '16px',
+    padding: '8px',
   },
-});
+};
 
 class MsgInput extends Component {
   constructor(props){
