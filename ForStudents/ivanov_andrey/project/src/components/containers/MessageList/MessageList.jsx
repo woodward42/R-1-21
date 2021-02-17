@@ -8,33 +8,18 @@ export default class MessageList extends Component {
         super(props);
         this.state = {
             messages: [
-                { name: 'Андрей', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
-                { name: 'Андрей', text: 'Как дела?' }
+                { name: 'Собеседник', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
+                { name: 'Собеседник', text: 'Как дела?' }
             ],
-            text: ''
+            
         };
         
     }
 
-    sendMessage = () => {
+    sendMessage = (msg) => {
         this.setState({
-            messages: [...this.state.messages, {
-                name: 'Аноним', text: this.state.text
-            }]
+            messages: [...this.state.messages, { ...msg }]
         });
-    }    
-
-    handleCallback = (childData) => {
-        this.setState({text: childData});
-    }
-
-    componentDidUpdate() {
-        //если текст не пустой, то мы только что обновили стэйт и из MsgInput приняли туда текст + обновили стэйт
-        //запускаем отправку сообщения
-        if (this.state.text !== ''){
-            this.sendMessage();
-            this.setState({text: ''});
-        }   
     }
 
     render() {
@@ -48,7 +33,7 @@ export default class MessageList extends Component {
         
         return <div className="message-list">
                  { Messages }
-                 <MsgInput parentCallback = { this.handleCallback }/>
+                 <MsgInput sendMessage = { this.sendMessage }/>
                </div>;
 
     }

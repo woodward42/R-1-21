@@ -1,49 +1,60 @@
 import React, {Component} from 'react';
 import './style.scss';
-import SendButton from '@components/SendButton';
-import MessageText from '@components/MessageText';
+import { TextField, withStyles } from '@material-ui/core';
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: theme.spacing(8),
+    padding: theme.spacing(4),
+  },
+});
 
-export default class MsgInput extends Component {
+class MsgInput extends Component {
   constructor(props){
       super(props);
       this.inputFieldRef = React.createRef();
+      this.state = {
+        name: 'Я',
+        text: ''
+      }
   }
   
-  
-  componentDidMount() {
-    this.inputFieldRef.current.focus();
-  }
-  componentDidUpdate() {
-    this.inputFieldRef.current.focus();
+  onSubmit = evt => {
+    evt.preventDefault();
+
+    const { sendMessage } = this.props;
+    sendMessage(this.state);
   }
 
-  handleAction = evt => {
-    //у меня получилось добавить через Material компонент текстового воода, но у меня не получилось по нажатию КНОПКИ получить 
-    //текущее value из инпута, отрисованного компонентом. Поэтому я оставил текстовый, т.к. застрял на этом
+  onChange = ({ target }) => {
+    const { value, name } = target;
 
-    let input = document.querySelector('.message-input__text');
-    //let input = document.querySelector('#message-text');
-    
-    //короче, когда добавил кнопку через Material, там клик ловится то на спан, то на баттон, то еще на какой-то элемент кнопки
-    //я так и не понял, как в целом передать сюда, что я кликнул по компоненту КНОПКА. как это сделать, подскажите?
-    if (evt.keyCode == 13 || evt.target.tagName == 'BUTTON' || evt.target.innerText == 'ОТПРАВИТЬ'){
-    
-     this.props.parentCallback(input.value); 
-     input.value = '';
-    }
-  }
-  
+    this.setState({
+      [name]: value,
+    });
+  };
+
   render(){
-    return <div className="message-input">
-            <input 
-              type="text" 
-              className="message-input__text" 
-              onKeyUp = { this.handleAction } 
-              ref = { this.inputFieldRef }
-            />
-            {/* <MessageText handleAction = { this.handleAction } /> */}
-            <SendButton handleAction = { this.handleAction } />
-          </div>; 
+    const { name, text } = this.state;
+
+    return (
+      <form className="message-input__form" onSubmit={ this.onSubmit }>
+        <TextField
+          name="text"
+          label="Введите сообщение..."
+          onChange={ this.onChange }
+          value={ text }
+          autoComplete="off" 
+          fullWidth 
+          autoFocus 
+          variant="outlined"
+        />
+        <button type="submit" className="message-input__btn">Отправить сообщение</button>
+      </form>
+    )
   }
 }
+
+export default withStyles(styles)(MsgInput);
