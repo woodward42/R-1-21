@@ -3,7 +3,7 @@ import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
 import Header from '@components/Header';
-import ChatsList from '@components/ChatsList';
+import ChatsList from '@components/containers/ChatsList';
 
 export default class MessageList extends Component {
     constructor (props) {
