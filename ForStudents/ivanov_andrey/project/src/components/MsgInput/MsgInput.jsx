@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './style.scss';
 import { TextField, withStyles } from '@material-ui/core';
 
+
 const styles ={
   root: {
     display: 'flex',
@@ -20,12 +21,16 @@ class MsgInput extends Component {
         text: ''
       }
   }
-  
+    
   onSubmit = evt => {
     evt.preventDefault();
 
     const { sendMessage } = this.props;
     sendMessage(this.state);
+
+    this.setState({ 
+      text: ''
+    });
   }
 
   onChange = ({ target }) => {
@@ -49,7 +54,8 @@ class MsgInput extends Component {
           autoComplete="off" 
           fullWidth 
           autoFocus 
-          variant="outlined"
+          variant="outlined" 
+          id="message-input__text"
         />
         <button type="submit" className="message-input__btn">Отправить сообщение</button>
       </form>

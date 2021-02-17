@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
+import Header from '@components/Header';
 
 export default class MessageList extends Component {
     constructor (props) {
@@ -11,9 +12,7 @@ export default class MessageList extends Component {
                 { name: 'Собеседник', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
                 { name: 'Собеседник', text: 'Как дела?' }
             ],
-            
         };
-        
     }
 
     sendMessage = (msg) => {
@@ -32,8 +31,9 @@ export default class MessageList extends Component {
             />);
         
         return <div className="message-list">
-                 { Messages }
-                 <MsgInput sendMessage = { this.sendMessage }/>
+                <Header />
+                { Messages }
+                <MsgInput sendMessage = { this.sendMessage }/>
                </div>;
 
     }
