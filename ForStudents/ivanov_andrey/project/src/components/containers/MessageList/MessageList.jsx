@@ -3,6 +3,7 @@ import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
 import Header from '@components/Header';
+import ChatsList from '@components/ChatsList';
 
 export default class MessageList extends Component {
     constructor (props) {
@@ -30,10 +31,15 @@ export default class MessageList extends Component {
                 text={ el.text }
             />);
         
-        return <div className="message-list">
+        return <div className="messagelist-wrapper">
                 <Header />
-                { Messages }
-                <MsgInput sendMessage = { this.sendMessage }/>
+                <div className="chatslist-wrapper">
+                    <ChatsList />
+                </div>
+                    <div className="message-list1">
+                     { Messages }
+                     <MsgInput sendMessage = { this.sendMessage }/>
+                    </div>
                </div>;
 
     }

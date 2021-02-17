@@ -6,7 +6,7 @@ import './style.scss';
 
 export default () => {
 
-    return  <div className="message_list">
+    return  <div/*  className="message_list" */>
                 { <MessageList /> }
             </div>;
 }
